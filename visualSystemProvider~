@@ -1,0 +1,4 @@
+#!/usr/bin/pythom
+
+from camera import camera
+from PatterPerceptor import PatterPerceptor
