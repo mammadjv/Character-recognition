@@ -9,7 +9,10 @@ class Camera:
         def __init__(self,id):
 		self.cap = cv2.VideoCapture(id)
 		self.queue = Queue(10)
+		self.cap.set(3,300)
+		self.cap.set(4,300)
 		self.thread = Thread(target = self.update)
+		self.thread.daemon = True
 	def read(self):
 		if(self.queue.qsize()>0):
 			frame = self.queue.get()

@@ -2,14 +2,16 @@
 
 from camera import Camera
 from pattern_perceptor import PatternPerceptor
+from regionProvider import RegionProvider
 import cv2
 import time
 import cv
 
 class VisualSystemProvider:
 	def __init__(self):
-		self.camera = Camera(1);
-		self.patternPerceptor = PatternPerceptor("./deploy.prototxt","./hand_written.caffemodel");
+		self.camera = Camera(0)
+		self.patternPerceptor = PatternPerceptor("./deploy.prototxt","./hand_written1.caffemodel")
+		self.regionProvider = RegionProvider()
 	def run(self):
 		self.camera.startCameraBuffering()
 		while(True):
@@ -18,9 +20,10 @@ class VisualSystemProvider:
 			if image == None :
 				continue
 			print('read' , time.time() - start)
-			cv2.imshow('image',image)
+			image, croped_image = self.regionProvider.findContours(image)
+			cv2.imshow('image',croped_image)
 			cv2.waitKey(2)
-			self.patternPerceptor.recognize(image)
+#			self.patternPerceptor.recognize(image)
 			print('full ' , time.time()-start)
 	def cvCVMATtoCaffeImage(self,image):
 		cvImg = cv2.cv.fromarray(image)
