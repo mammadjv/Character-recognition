@@ -3,5 +3,5 @@ import numpy as np
 import cv2
 import sys
 
-visualSystemProvider = VisualSystemProvider();
-visualSystemProvider.run();
+visualSystemProvider = VisualSystemProvider()
+visualSystemProvider.run()

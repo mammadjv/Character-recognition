@@ -5,24 +5,31 @@ from Queue import Queue
 from threading import Thread
 import sys
 
+
 class Camera:
         def __init__(self,id):
 		self.cap = cv2.VideoCapture(id)
-		self.queue = Queue(10)
-		self.cap.set(3,300)
-		self.cap.set(4,300)
-		self.thread = Thread(target = self.update)
-		self.thread.daemon = True
+		self.queue = []
+		self.cap.set(3,640)
+		self.cap.set(4,480)
+#		self.thread = Thread(target = self.update)
+#		self.thread.daemon = True
 	def read(self):
-		if(self.queue.qsize()>0):
-			frame = self.queue.get()
-			return frame
-		else:
-			return None
+		(framerate , frame) = self.cap.read()
+		frame = cv2.flip(cv2.transpose(frame) , flipCode = 0)
+		return frame
+#		if( len(self.queue) > 1):
+#			frame = self.queue.pop()
+#			frame = cv2.flip(cv2.transpose(frame) , flipCode = 0)
+#			return frame
+#		else:
+#			return None
 	def startCameraBuffering(self):
 		self.thread.start()
 	def update(self):
 		while(True):
-			if not self.queue.full():
-				(framerate , frame) = self.cap.read()
-				self.queue.put(frame)
+			if ( len(self.queue) ==   10):
+				self.queue.pop(0)
+				
+			(framerate , frame) = self.cap.read()
+			self.queue.append(frame)

@@ -28,6 +28,6 @@ class PatternPerceptor:
 #		print(output['prob'])
 #		print(output_prob.shape)
 		
-		print('time ' + str(time.time() - start))
-		print ('predicted class is:', output_prob.argmax())
-		return output_prob.argmax(), output_prob[output_prob.argmax()]
+#		print('time ' + str(time.time() - start))
+#		print ('predicted class is:', output_prob.argmax())
+		return output_prob.argmax()
